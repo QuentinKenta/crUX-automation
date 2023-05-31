@@ -5,10 +5,14 @@ async function callCruXAPI() {
       const payload = {
         origin: 'https://us.louisvuitton.com/'
       };
-  
-      const response = await axios.post('https://chromeuxreport.googleapis.com/v1/records:queryHistoryRecord?key='+process.env.CRUXKEY, payload);
+      const cruxKey = 'AIzaSyAf0EHL9xP4tQwHNAIYTBWeDZBB_Ij2gys' //process.env.CRUXKEY;
+      const apiUrl = "https://chromeuxreport.googleapis.com/v1/records:queryHistoryRecord?key="+cruxKey;
+
+      const response = await axios.post(apiUrl, payload);
+
       console.log(response.data);
       return response.data;
+
     } catch (error) {
       console.error('Error calling CruX API:', error.message);
       throw error;
