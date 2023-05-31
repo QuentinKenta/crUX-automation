@@ -21,7 +21,8 @@ async function callCruXAPI() {
 callCruXAPI()
   .then((response) => {
     console.log('API response:', response);
-    process.stdout.write(`::set-output name=response::${response}`);
+    //process.stdout.write(`::set-output name=response::${response}`);
+    process.stdout.write('echo "{response}=${response}" >> $GITHUB_OUTPUT');
   })
   .catch((error) => {
     process.exitCode = 1;
