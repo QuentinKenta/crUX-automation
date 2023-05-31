@@ -1,16 +1,19 @@
 const axios = require('axios');
 
 async function callCruXAPI() {
-  try {
-    const response = await axios.get('https://chromeuxreport.googleapis.com/v1/records:queryRecord?key=AIzaSyAf0EHL9xP4tQwHNAIYTBWeDZBB_Ij2gys');
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error calling CruX API:', error.message);
-    throw error;
+    try {
+      const payload = {
+        origin: 'https://us.louisvuitton.com/'
+      };
+  
+      const response = await axios.post('https://chromeuxreport.googleapis.com/v1/records:queryHistoryRecord?key='+process.env.CRUXKEY, payload);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error calling CruX API:', error.message);
+      throw error;
+    }
   }
-}
-
 callCruXAPI()
   .then((response) => {
     console.log('API response:', response);
