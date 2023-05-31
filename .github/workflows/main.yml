@@ -12,6 +12,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
+      - name: Install dependencies
+        run: npm install
       - name: Call CruX API and log response
         id: api
         run: node index.js
