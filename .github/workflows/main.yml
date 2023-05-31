@@ -17,7 +17,7 @@ jobs:
       - name: Call CruX API and log response
         id: api
         env:
-          CRUXKEY: ${{ secrets.CRUXKEY }}
+          CRUX_KEY: ${{ secrets.CRUXKEY }}
         run: node index.js
       - name: Use API response in the next step
         run: |

@@ -5,7 +5,7 @@ async function callCruXAPI() {
       const payload = {
         origin: 'https://us.louisvuitton.com/'
       };
-      const cruxKey = process.env.CRUXKEY;
+      const cruxKey = process.env.CRUX_KEY;
       const apiUrl = `https://chromeuxreport.googleapis.com/v1/records:queryHistoryRecord?key=${cruxKey}`;
 
       const response = await axios.post(apiUrl, payload);
