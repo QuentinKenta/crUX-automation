@@ -1,19 +1,28 @@
+name: Call Crux API
+
 on: [workflow_dispatch]
 
 jobs:
-  hello_world_job:
+  call_crux_api:
     runs-on: ubuntu-latest
-    name: A job to say ByeBye!
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
+
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Hello world action step
-        uses: ./ # Uses an action in the root directory
-        id: hello
-        with:
-          who-to-greet: 'Bye bye !!'
+
+        - name: Call CruX API and log response
+        id: api
+        run: node index.js
+      
+      - name: Use API response in the next step
+        run: |
+          echo "The API response is ${{ steps.api.outputs.response }}"
+
+#      - name: Hello world action step
+#        uses: ./ # Uses an action in the root directory
+#        id: hello
+#        with:
+#          who-to-greet: 'Bye bye !!'
       # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+#      - name: Get the output time
+#        run: echo "The time was ${{ steps.hello.outputs.time }}"
