@@ -1,16 +1,23 @@
 const axios = require('axios');
 const config = require('./config.json');
-const cruxKey = process.env.CRUX_KEY;
+const cruxKey = "AIzaSyAf0EHL9xP4tQwHNAIYTBWeDZBB_Ij2gys"//process.env.CRUX_KEY;
 
 const responseArray = [];
 
-async function callCruXAPI(payload,cruxKey) {
+async function callCruXAPI(body,type,testUrl,cruxKey) {
     try {
-
       const apiUrl = `https://chromeuxreport.googleapis.com/v1/records:queryRecord?key=${cruxKey}`;
-      const response = await axios.post(apiUrl, payload);
-      //console.log(response.data);
-      return response.data;
+      const response = await axios.post(apiUrl,body);
+      const originOrUrl = type;
+      const result = new  Array;
+      result.push(
+        {
+          "originOrUrl":originOrUrl,
+          "testUrl":testUrl,
+          "responseData":response.data
+        }
+      );
+      return result;
 
     } 
     catch (error) 
@@ -21,29 +28,39 @@ async function callCruXAPI(payload,cruxKey) {
   }
 
 
+function pushResponse(originOrUrl,testUrl,responseData) {
+  
+  responseArray.push(
+    {
+    "originOrUrl" : originOrUrl,
+    "testUrl" : testUrl,
+    "formFactor":responseData.record.key.formFactor,
+    "largest_contentful_paint":responseData.record.metrics["largest_contentful_paint"].percentiles.p75,
+    "first_input_delay":responseData.record.metrics["first_input_delay"].percentiles.p75,
+    "cumulative_layout_shift":responseData.record.metrics["cumulative_layout_shift"].percentiles.p75,
+    "first_contentful_paint":responseData.record.metrics["first_contentful_paint"].percentiles.p75,
+    "interaction_to_next_paint":responseData.record.metrics["interaction_to_next_paint"].percentiles.p75,
+    "experimental_time_to_first_byte":responseData.record.metrics["experimental_time_to_first_byte"].percentiles.p75
+    }
+    );
+    return responseArray;
+
+}
+
+
 async function run() {
   try {
     for (const payload of config) 
     {
-      await callCruXAPI(payload,cruxKey)
-      .then((response) => {
-      responseArray.push(
-        {
-        "origin":jsonData.record.key.origin,
-        "formFactor":jsonData.record.key.formFactor,
-        "largest_contentful_paint":jsonData.record.metrics["largest_contentful_paint"].percentiles.p75,
-        "first_input_delay":jsonData.record.metrics["first_input_delay"].percentiles.p75,
-        "cumulative_layout_shift":jsonData.record.metrics["cumulative_layout_shift"].percentiles.p75,
-        "first_contentful_paint":jsonData.record.metrics["first_contentful_paint"].percentiles.p75,
-        "interaction_to_next_paint":jsonData.record.metrics["interaction_to_next_paint"].percentiles.p75,
-        "experimental_time_to_first_byte":jsonData.record.metrics["experimental_time_to_first_byte"].percentiles.p75
-        }
-        );
-      })
+      await callCruXAPI(payload.body,payload.type,payload.testUrl,cruxKey)
+      .then((result) => {
+        pushResponse(result[0].originOrUrl,result[0].testUrl,result[0].responseData);
+      });
     }
   }
   catch (error)
-    {process.exitCode =1;}
+    {process.exitCode =1;
+      console.log(error.message)}
   finally 
   {
     console.log('responseArray',JSON.stringify(responseArray));

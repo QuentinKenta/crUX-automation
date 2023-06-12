@@ -1,9 +1,18 @@
 [
     {
-        "origin" : "https://us.louisvuitton.com/"
+        "type":"origin",
+        "testUrl":"https://us.louisvuitton.com/",
+        "body":{
+            "origin" : "https://us.louisvuitton.com/",
+            "formFactor" : "PHONE"
+        }
     },
     {
-        "url" : "https://us.louisvuitton.com/eng-us/women/handbags/all-handbags/_/N-tfr7qdp",
-        "formFactor" : "DESKTOP"
+        "type":"url",
+        "testUrl":"https://us.louisvuitton.com/eng-us/women/handbags/all-handbags/_/N-tfr7qdp",
+        "body":{
+            "url" : "https://us.louisvuitton.com/eng-us/women/handbags/all-handbags/_/N-tfr7qdp",
+            "formFactor" : "DESKTOP"
+        }
     }
 ]
