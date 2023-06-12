@@ -27,8 +27,18 @@ async function run() {
     {
       await callCruXAPI(payload,cruxKey)
       .then((response) => {
-        //console.log('API response:', response);
-        responseArray.push(response);
+      responseArray.push(
+        {
+        "origin":jsonData.record.key.origin,
+        "formFactor":jsonData.record.key.formFactor,
+        "largest_contentful_paint":jsonData.record.metrics["largest_contentful_paint"].percentiles.p75,
+        "first_input_delay":jsonData.record.metrics["first_input_delay"].percentiles.p75,
+        "cumulative_layout_shift":jsonData.record.metrics["cumulative_layout_shift"].percentiles.p75,
+        "first_contentful_paint":jsonData.record.metrics["first_contentful_paint"].percentiles.p75,
+        "interaction_to_next_paint":jsonData.record.metrics["interaction_to_next_paint"].percentiles.p75,
+        "experimental_time_to_first_byte":jsonData.record.metrics["experimental_time_to_first_byte"].percentiles.p75
+        }
+        );
       })
     }
   }
