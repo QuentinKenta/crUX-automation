@@ -7,7 +7,7 @@ const responseArray = [];
 async function callCruXAPI(payload,cruxKey) {
     try {
 
-      const apiUrl = `https://chromeuxreport.googleapis.com/v1/records:queryHistoryRecord?key=${cruxKey}`;
+      const apiUrl = `https://chromeuxreport.googleapis.com/v1/records:queryRecord?key=${cruxKey}`;
       const response = await axios.post(apiUrl, payload);
       //console.log(response.data);
       return response.data;
