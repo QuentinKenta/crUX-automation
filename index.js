@@ -1,6 +1,6 @@
 const axios = require('axios');
 const config = require('./config.json');
-const cruxKey = "AIzaSyAf0EHL9xP4tQwHNAIYTBWeDZBB_Ij2gys"//process.env.CRUX_KEY;
+const cruxKey = process.env.CRUX_KEY;
 
 const responseArray = [];
 
