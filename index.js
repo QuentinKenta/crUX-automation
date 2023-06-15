@@ -30,6 +30,8 @@ async function callCruXAPI(body,type,testUrl,cruxKey) {
 
 function pushResponse(originOrUrl,testUrl,responseData) {
   
+  process.stdout.write(`originOrUrl="${originOrUrl}"\n`)
+
   responseArray.push(
     {
     "originOrUrl" : originOrUrl,
@@ -52,21 +54,19 @@ async function run() {
   try {
     for (const payload of config) 
     {
-      await callCruXAPI(payload.body,payload.type,payload.testUrl,cruxKey)
-      .then((result) => {
-        pushResponse(result[0].originOrUrl,result[0].testUrl,result[0].responseData);
-      });
+      const result = await callCruXAPI(payload.body,payload.type,payload.testUrl,cruxKey)
+      pushResponse(result[0].originOrUrl,result[0].testUrl,result[0].responseData);
     }
   }
   catch (error)
     {process.exitCode =1;
       console.log(error.message)}
-  finally 
+  /*finally 
   {
     console.log('responseArray',JSON.stringify(responseArray));
     //process.stdout.write(`::set-output name=response::${response}`);
     process.stdout.write(`echo "{response}=${responseArray}" >> $GITHUB_OUTPUT`);
-  }
+  }*/
 }
 
 run();

@@ -18,10 +18,10 @@ jobs:
         id: api
         env:
           CRUX_KEY: ${{ secrets.CRUXKEY }}
-        run: node index.js
+        run: node index.js >> $GITHUB_OUTPUT
       - name: Use API response in the next step
         run: |
-          echo "The API response is ${{ steps.api.outputs.response }}"
+          echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}"
 
 #      - name: Hello world action step
 #        uses: ./ # Uses an action in the root directory
