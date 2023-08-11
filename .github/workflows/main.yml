@@ -18,13 +18,17 @@ jobs:
         id: api
         env:
           CRUX_KEY: ${{ secrets.CRUXKEY }}
-        run: node index.js >> $GITHUB_OUTPUT
-        outputs:
-          results: ${{ steps.api.outputs.stdout }}
+        run: #node index.js >> $GITHUB_OUTPUT
+          response=$(node index.js)
+          echo "$response" >> $GITHUB_ENV
+          echo "::set-output name=response::$response"
+          
       - name: Use API response in the next step
         run: |
-          echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}" 
-          echo "The API largest_contentful_paint is ${{ steps.api.outputs.largest_contentful_paint }}"
+          response="${{ steps.api.outputs.response }}"
+          echo "The API response is $response"
+#          echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}" 
+#         echo "The API largest_contentful_paint is ${{ steps.api.outputs.largest_contentful_paint }}"
         
 
 #      - name: Hello world action step
