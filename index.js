@@ -1,6 +1,6 @@
 const axios = require('axios');
 const config = require('./config.json');
-const cruxKey = process.env.CRUX_KEY;
+const cruxKey = "AIzaSyAf0EHL9xP4tQwHNAIYTBWeDZBB_Ij2gys" //process.env.CRUX_KEY;
 
 const responseArray = [];
 
@@ -30,10 +30,8 @@ async function callCruXAPI(body,type,testUrl,cruxKey) {
 
 function pushResponse(originOrUrl,testUrl,responseData) {
   
-  process.stdout.write(`originOrUrl="${originOrUrl}"\n`)
-
-  responseArray.push(
-    {
+  const outputs =
+  {
     "originOrUrl" : originOrUrl,
     "testUrl" : testUrl,
     "formFactor":responseData.record.key.formFactor,
@@ -43,20 +41,32 @@ function pushResponse(originOrUrl,testUrl,responseData) {
     "first_contentful_paint":responseData.record.metrics["first_contentful_paint"].percentiles.p75,
     "interaction_to_next_paint":responseData.record.metrics["interaction_to_next_paint"].percentiles.p75,
     "experimental_time_to_first_byte":responseData.record.metrics["experimental_time_to_first_byte"].percentiles.p75
-    }
-    );
-    return responseArray;
+  }
+  
+  /*
+  Object.entries(outputs).forEach(([key, value]) => {
+    process.stdout.write(`${key}="${value}"\n`)
+  })
+  */
+  
+  return outputs;
 
 }
 
 
 async function run() {
   try {
+
+    const results = []
     for (const payload of config) 
     {
-      const result = await callCruXAPI(payload.body,payload.type,payload.testUrl,cruxKey)
-      pushResponse(result[0].originOrUrl,result[0].testUrl,result[0].responseData);
+      const result = await callCruXAPI(payload.body,payload.type,payload.testUrl,cruxKey);
+      const outputs = await pushResponse(result[0].originOrUrl,result[0].testUrl,result[0].responseData);
+      results.push(outputs);
     }
+
+    console.log(results);
+    return results
   }
   catch (error)
     {process.exitCode =1;
