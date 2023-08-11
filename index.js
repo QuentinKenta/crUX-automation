@@ -65,7 +65,7 @@ async function run() {
       results.push(outputs);
     }
 
-    console.log(results);
+    console.log(JSON.stringify(results));
     return results
   }
   catch (error)
