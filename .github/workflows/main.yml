@@ -20,8 +20,8 @@ jobs:
           CRUX_KEY: ${{ secrets.CRUXKEY }}
         run: #node index.js >> $GITHUB_OUTPUT
           response=$(node index.js)
-          echo "$response" >> $GITHUB_ENV  # Set response as an environment variable
-          echo "$response" >> $GITHUB_OUTPUT  # Store response in the GITHUB_OUTPUT environment file
+          echo "$response" >> $GITHUB_ENV
+          echo "$response" >> $GITHUB_OUTPUT 
           
       - name: Use API response in the next step
         run: | 
@@ -29,13 +29,3 @@ jobs:
           echo "The API response is $response"
 #         echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}" 
 #         echo "The API largest_contentful_paint is ${{ steps.api.outputs.largest_contentful_paint }}"
-        
-
-#      - name: Hello world action step
-#        uses: ./ # Uses an action in the root directory
-#        id: hello
-#        with:
-#          who-to-greet: 'Bye bye !!'
-      # Use the output from the `hello` step
-#      - name: Get the output time
-#        run: | echo "The time was ${{ steps.hello.outputs.time }}"
