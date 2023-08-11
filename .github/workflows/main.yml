@@ -21,7 +21,9 @@ jobs:
         run: node index.js >> $GITHUB_OUTPUT
       - name: Use API response in the next step
         run: |
-          echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}"
+          echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}" 
+          echo "The API largest_contentful_paint is ${{ steps.api.outputs.largest_contentful_paint }}"
+        
 
 #      - name: Hello world action step
 #        uses: ./ # Uses an action in the root directory
@@ -30,4 +32,4 @@ jobs:
 #          who-to-greet: 'Bye bye !!'
       # Use the output from the `hello` step
 #      - name: Get the output time
-#        run: echo "The time was ${{ steps.hello.outputs.time }}"
+#        run: | echo "The time was ${{ steps.hello.outputs.time }}"
