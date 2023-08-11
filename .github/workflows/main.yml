@@ -21,8 +21,9 @@ jobs:
         run: node index.js >> $GITHUB_OUTPUT
 
       - name: Use API response in the next step
-        run: | 
-        response=$(cat $GITHUB_OUTPUT)
-        echo "The API response is $response"
+        env :
+          RESPONSE: ${{ steps.api.outputs.response }}
+        run: echo "The response is $RESPONSE"
+
 #         echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}" 
 #         echo "The API largest_contentful_paint is ${{ steps.api.outputs.largest_contentful_paint }}"
