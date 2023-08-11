@@ -21,7 +21,6 @@ jobs:
         run: #node index.js >> $GITHUB_OUTPUT
           response=$(node index.js)
           echo "$response" >> $GITHUB_ENV
-          echo "$response" >> $GITHUB_OUTPUT 
           
       - name: Use API response in the next step
         run: | 
