@@ -61,7 +61,7 @@ async function run() {
     for (const payload of config) 
     {
       const apiResponse = await callCruXAPI(payload.body,payload.type,payload.testUrl,cruxKey);
-      const parsedResponse = await pushResponse(result[0].originOrUrl,result[0].testUrl,result[0].responseData);
+      const parsedResponse = await pushResponse(apiResponse[0].originOrUrl,apiResponse[0].testUrl,apiResponse[0].responseData);
       results.push(parsedResponse);
     }
 
