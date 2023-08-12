@@ -25,9 +25,8 @@ jobs:
           
       - name: Use API response in the next step
         run: 
-          scriptOutput=${{ env.SCRIPT_OUTPUT }}
-          echo "The output from index.js is: $scriptOutput"
-          echo "The response is $cruxOutput"
+          scriptOutput="${{ env.CRUX_OUTPUT }}"
+          echo "The output from index.js is $scriptOutput"
 
 #         echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}" 
 #         echo "The API largest_contentful_paint is ${{ steps.api.outputs.largest_contentful_paint }}"
