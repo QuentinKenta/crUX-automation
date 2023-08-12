@@ -15,15 +15,15 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Call CruX API and log response
-        id: api
+        id: crux-api
         env:
           CRUX_KEY: ${{ secrets.CRUXKEY }}
-        run: node index.js >> $GITHUB_OUTPUT
+        run: echo "{CRUX_RESPONSE}={node index.js}"  >> $GITHUB_OUTPUT
 
       - name: Use API response in the next step
         env :
-          RESPONSE: ${{ steps.api.outputs.response }}
-        run: echo "The response is $RESPONSE"
+          CRUX_RESPONSE: ${{ steps.api.outputs.CRUX_RESPONSE }}
+        run: echo "The response is $CRUX_RESPONSE"
 
 #         echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}" 
 #         echo "The API largest_contentful_paint is ${{ steps.api.outputs.largest_contentful_paint }}"
