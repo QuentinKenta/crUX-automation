@@ -19,9 +19,9 @@ jobs:
         env:
           CRUX_KEY: ${{ secrets.CRUXKEY }}
         run: 
-          cruxResponse=$(node index.js)
+          cruxResponse=$(node ../../index.js)
           echo "CRUX_OUTPUT=$cruxResponse" >> $GITHUB_ENV
-
+          
       - name: Use API response in the next step
         env :
           cruxOutput: ${{ steps.crux-api.env.CRUX_OUTPUT }}
