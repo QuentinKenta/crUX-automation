@@ -19,13 +19,15 @@ jobs:
         env:
           CRUX_KEY: ${{ secrets.CRUXKEY }}
         run: 
-          cruxResponse=$(node ../../index.js)
+          cruxResponse=$(node index.js)
+          echo $cruxResponse
           echo "CRUX_OUTPUT=$cruxResponse" >> $GITHUB_ENV
           
       - name: Use API response in the next step
-        env :
-          cruxOutput: ${{ steps.crux-api.env.CRUX_OUTPUT }}
-        run: echo "The response is $cruxOutput"
+        run: 
+          scriptOutput=${{ env.SCRIPT_OUTPUT }}
+          echo "The output from index.js is: $scriptOutput"
+          echo "The response is $cruxOutput"
 
 #         echo "The API originOrUrl is ${{ steps.api.outputs.originOrUrl }}" 
 #         echo "The API largest_contentful_paint is ${{ steps.api.outputs.largest_contentful_paint }}"
