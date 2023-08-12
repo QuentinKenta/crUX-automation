@@ -18,9 +18,8 @@ jobs:
         id: crux-api
         env:
           CRUX_KEY: ${{ secrets.CRUXKEY }}
-          CRUX_RESPONSE: node index.js
         run: 
-          
+          CRUX_RESPONSE=$(node index.js)
           echo "CRUX_RESPONSE is $CRUX_RESPONSE"
 
       - name: Use API response in the next step
