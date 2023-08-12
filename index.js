@@ -30,7 +30,7 @@ async function callCruXAPI(body,type,testUrl,cruxKey) {
 
 function pushResponse(originOrUrl,testUrl,responseData) {
   
-  const outputs =
+  const outs =
   {
     "originOrUrl" : originOrUrl,
     "testUrl" : testUrl,
@@ -49,7 +49,7 @@ function pushResponse(originOrUrl,testUrl,responseData) {
   })
   */
   
-  return outputs;
+  return outs;
 
 }
 
@@ -60,9 +60,9 @@ async function run() {
     const results = []
     for (const payload of config) 
     {
-      const result = await callCruXAPI(payload.body,payload.type,payload.testUrl,cruxKey);
-      const outputs = await pushResponse(result[0].originOrUrl,result[0].testUrl,result[0].responseData);
-      results.push(outputs);
+      const apiResponse = await callCruXAPI(payload.body,payload.type,payload.testUrl,cruxKey);
+      const parsedResponse = await pushResponse(result[0].originOrUrl,result[0].testUrl,result[0].responseData);
+      results.push(parsedResponse);
     }
 
     console.log(JSON.stringify(results));
